@@ -1,0 +1,6 @@
+azure-identity
+jaydebeapi
+JPype1
+msal 
+requests
+pandas
