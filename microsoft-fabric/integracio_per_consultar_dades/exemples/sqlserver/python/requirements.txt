@@ -1,3 +1,4 @@
 pyodbc
 azure-identity
 msal
+mssql-python

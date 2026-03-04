@@ -1,23 +1,24 @@
 import struct
 import time
 import pyodbc
-from azure.identity import InteractiveBrowserCredential
+from azure.identity import InteractiveBrowserCredential,ClientSecretCredential
 
 # ---- CONFIG ----
-TENANT_ID = "<TENANT_ID>"          # e.g., "contoso.onmicrosoft.com" or GUID
-CLIENT_ID = None                   # Si tens un registre d’aplicació específic; altrament deixa-ho a None
-SERVER = "<SERVER>"                # e.g., "xxxx-xxxx-xxxxx.sql.fabric.microsoft.com"
-DATABASE = "<DATABASE_NAME>"        
+TENANT_ID = "TENANT_ID"             # e.g., "contoso.onmicrosoft.com" or GUID
+CLIENT_ID = "CLIENT_ID"             # Si tens un registre d’aplicació específic; altrament deixa-ho a None
+CLIENT_SECRET = "CLIENT_SECRET"
+SERVER = "SERVER,PORT"              # e.g., "xxxx-xxxx-xxxxx.sql.fabric.microsoft.com,1433"
+DATABASE = "bronze_lh"              # e.g., "lakehouse_bronze"
 # ----------------
 
 # Fabric SQL endpoints use the SQL Database resource for tokens
 SCOPE = "https://database.windows.net/.default"
 
 # Create interactive credential (pops a browser on first use)
-credential = (
-    InteractiveBrowserCredential(tenant_id=TENANT_ID, client_id=CLIENT_ID)
-    if CLIENT_ID
-    else InteractiveBrowserCredential(tenant_id=TENANT_ID)
+credential = ClientSecretCredential(
+    tenant_id=TENANT_ID,
+    client_id=CLIENT_ID,
+    client_secret=CLIENT_SECRET
 )
 
 def get_sql_access_token():
@@ -53,9 +54,7 @@ def connect_with_access_token():
 if __name__ == "__main__":
     with connect_with_access_token() as cnxn:
         with cnxn.cursor() as cur:
-            # Example query: list top 10 objects
-            cur.execute("SELECT TOP 1000 * FROM [lakehouse_gold].[aoc_via_oberta].[fac_activitat];")
+            cur.execute("SELECT 1;")
             rows = cur.fetchall()
             for r in rows:
-                #print(r)
-                print(r.ide_ens_original)
+                print(r)

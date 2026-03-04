@@ -35,46 +35,45 @@ pip install -r requirements.txt
 
 ## 📦 Obtenció del Token d’accés
 ```bash
-import struct
-import time
-import pyodbc
-from azure.identity import InteractiveBrowserCredential
+import mssql_python
 
-TENANT_ID = "TENANT_ID"
-CLIENT_ID = None
-SERVER = "SQL_ENDPOINT_URL"
-DATABASE = "NOM_LAKEHOUSE"
+# Connection parameters
+SERVER = "SERVER"                       # e.g., "xxxx-xxxx-xxxxx.sql.fabric.microsoft.com"
+DATABASE = "DATABASE"                   # e.g., "lakehouse_gold"
+CLIENT_ID = "CLIENT_ID"                 # Si tens un registre d’aplicació específic
+CLIENT_SECRET = "CLIENT_SECRET"         # Si tens un registre d’aplicació pdw
 
-SCOPE = "https://database.windows.net/.default"
+# Connection string
+conn_str = f"""
+Server={SERVER},1433;
+Database={DATABASE};
+Authentication=ActiveDirectoryServicePrincipal;
+UID={CLIENT_ID};
+PWD={CLIENT_SECRET};
+Encrypt=yes;
+TrustServerCertificate=no
+"""
 
-credential = InteractiveBrowserCredential(tenant_id=TENANT_ID, client_id=CLIENT_ID) if CLIENT_ID else InteractiveBrowserCredential(tenant_id=TENANT_ID)
-
-def get_sql_access_token():
-    token = credential.get_token(SCOPE)
-    access_token = token.token.encode("utf-16-le")
-    return struct.pack(f"<I{len(access_token)}s", len(access_token), access_token)
 ```
 
 ## 📦 Consulta de dades del Lakehouse
 ```bash
-def connect_with_access_token():
-    conn_str = (
-        "Driver={ODBC Driver 18 for SQL Server};"
-        f"Server={SERVER};"
-        f"Database={DATABASE};"
-        "Encrypt=yes;"
-        "TrustServerCertificate=no;"
-        "Connection Timeout=30;"
-    )
-    SQL_COPT_SS_ACCESS_TOKEN = 1256
-    token_bytes = get_sql_access_token()
-    return pyodbc.connect(conn_str, attrs_before={SQL_COPT_SS_ACCESS_TOKEN: token_bytes})
+try:
+    # Establish connection
+    with mssql_python.connect(conn_str) as conn:
+        with conn.cursor() as cursor:
+            # Test query
+            cursor.execute("SELECT DISTINCT(ide_ens) FROM [aoc_enotum].[fac_notificacions_activitat];")  # No data, just schema
+            
+            rows = cursor.fetchall()
+            for row in rows:
+                print(row)
 
-with connect_with_access_token() as cnxn:
-    with cnxn.cursor() as cur:
-        cur.execute("SELECT TOP 10 * FROM [lakehouse_gold].[aoc_via_oberta].[fac_activitat];")
-        for r in cur.fetchall():
-            print(r)
+    print("Connection successful.")
+
+except Exception as e:
+    print("Connection failed:")
+    print(e)
 ```
 
 ---
