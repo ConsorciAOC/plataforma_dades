@@ -1,0 +1,105 @@
+# Integració amb la Capa Landing de l’AOC
+
+Aquest repositori descriu les **dues opcions disponibles perquè els organismes integrin dades amb la capa Landing de l’AOC**, segons es mostra al diagrama d’arquitectura. Ambdues opcions permeten la ingesta de dades cap a la plataforma corporativa, però difereixen en el **grau de governança, responsabilitats i control**.
+
+---
+
+## Diagrama d’Arquitectura
+
+![alt text](arquitectura_landing.png)
+
+---
+
+## Visió general
+
+L’arquitectura distingeix entre:
+
+- **Landing de l’Organisme (No AOC)**  
+- **Landing Azure AOC (Governada)**  
+
+Ambdues rutes permeten alimentar la **Plataforma de Dades** (Bronze/Silver/Gold) i els **espais de treball de l’organisme**, però amb diferents nivells d’estandardització i control per part de l’AOC.
+
+---
+
+## Opció 1: Integració mitjançant la *Landing de l’Organisme (No AOC)*
+
+### Descripció
+
+En aquesta opció, l’organisme manté la seva **pròpia capa Landing**, fora del perímetre directe de l’AOC. Les dades s’allotgen i es gestionen en infraestructures de l’organisme i posteriorment s’integren amb la plataforma de dades corporativa.
+
+### Orígens de dades típics
+
+La Landing de l’Organisme pot rebre dades des de múltiples fonts, com ara:
+
+- Servidors **SFTP**  
+- **Azure Blob Storage**  
+- **Azure Data Lake Gen2**  
+- **SharePoint**  
+- **Fabric Lakehouse propi**  
+- Altres orígens externs (per exemple, **Amazon S3**, etc.)
+
+### Flux de dades
+
+1. L’organisme ingesta les dades a la seva pròpia Landing.
+2. S’estableixen processos de transferència o accés cap a la **zona Bronze/Silver** de la plataforma de dades.
+3. Les dades evolucionen cap a **Gold** per al seu consum analític.
+
+### Responsabilitats
+
+- L’**organisme** és responsable de:
+  - La ingesta inicial
+  - La qualitat de les dades en origen
+  - La seguretat i la gestió dels accessos
+- L’**AOC** consumeix les dades disponibles per a la seva normalització i explotació.
+
+### Quan utilitzar aquesta opció
+
+✅ Recomanada quan:
+- L’organisme ja disposa d’una Landing madura.
+- Existeixen requisits de sobirania o control del dada.
+- Es requereix flexibilitat tecnològica en la ingesta.
+
+---
+
+## Opció 2: Integració mitjançant la *Azure Landing AOC* (Governada)
+
+### Descripció
+
+En aquesta opció, l’organisme utilitza la **Landing corporativa de l’AOC a Azure**, dissenyada per oferir un model **estàndard, governat i alineat amb Fabric i OneLake**.
+
+### Components clau
+
+- **SFTP gestionat per l’AOC**  
+- **Azure Blob Storage**  
+- **Landing a OneLake**
+
+Aquests components formen part d’una Landing comuna i governada, preparada per integrar-se de manera nativa amb la plataforma de dades.
+
+### Flux de dades
+
+1. L’organisme diposita les dades directament a la **Landing AOC**.
+2. Les dades s’incorporen automàticament als fluxos de la plataforma:
+   - Bronze / Silver
+   - Gold
+3. Les dades poden ser explotades des de:
+   - Gold corporatiu
+   - Lakehouse de l’organisme a Fabric
+
+### Responsabilitats
+
+- L’**AOC** proporciona:
+  - Infraestructura
+  - Estàndards d’ingesta
+  - Seguretat i govern del dada
+- L’**organisme** es focalitza en:
+  - Proveir les dades
+  - Definir les regles de negoci i de consum
+
+### Quan utilitzar aquesta opció
+
+✅ Recomanada quan:
+- Es busca alineació amb el model corporatiu de l’AOC.
+- No existeix una Landing prèvia de l’organisme.
+
+
+

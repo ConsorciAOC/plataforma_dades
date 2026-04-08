@@ -8,7 +8,7 @@ Aquest repositori recopila diversos **exemples, guies i instructius** per trebal
 
 ```
 plataforma_dades/
- └── microsoft-fabric/
+ ├── microsoft-fabric/
       └── integracio_per_consultar_dades
           └── exemples/
               └── databricks/
@@ -17,6 +17,7 @@ plataforma_dades/
               ├── odbc/
               ├── powerbI/
               └── sqlserver/
+ └── zona d'aterratge
 ```
 
 
