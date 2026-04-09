@@ -19,7 +19,41 @@ L’arquitectura distingeix entre:
 
 Ambdues rutes permeten alimentar la **Plataforma de Dades** (Bronze/Silver/Gold) i els **espais de treball de l’organisme**, però amb diferents nivells d’estandardització i control per part de l’AOC.
 
+
+## Ús de Shortcuts a OneLake
+
+Un dels objectius principals del model d’integració amb la capa Landing és minimitzar còpies innecessàries de dades, respectar la sobirania del dada dels organismes i, alhora, facilitar una visió unificada de la informació dins la plataforma corporativa.
+Per aconseguir-ho, la plataforma fa ús de Shortcuts de OneLake, una funcionalitat nativa de Microsoft Fabric que permet connectar dades existents sense haver-les de moure físicament.
+
+### Què és un Shortcut
+Un shortcut és un accés virtual dins de OneLake que apunta a una ubicació de dades existent, ja sigui dins del mateix OneLake o en sistemes externs.
+Funciona de manera similar a un enllaç simbòlic, de manera que:
+
+La dada continua residint en el seu origen.
+És visible i consumible des de Fabric com si fos local.
+No es genera cap còpia física de la informació.
+
+Aquest enfocament permet reduir latència, costos d’emmagatzematge i complexitat operativa, al mateix temps que s’ofereix una experiència homogènia als equips analítics.
+
+### Tipus de Shortcuts disponibles actualment
+A data d’avui, Microsoft Fabric permet crear shortcuts cap als següents tipus d’orígens:
+- OneLake (intern): accés a dades ubicades en altres workspaces o lakehouses.
+- Azure Data Lake Storage Gen2
+- Azure Blob Storage
+- Amazon S3
+- SharePoint / OneDrive
+- Altres orígens compatibles que es van incorporant progressivament dins l’ecosistema Fabric.
+
+Aquesta varietat permet adaptar-se tant a arquitectures cloud natives com a escenaris híbrids o multicloud.
+
+### Documentació oficial de Microsoft
+Microsoft actualitza de manera contínua els tipus d’orígens suportats i les capacitats dels shortcuts.
+Es recomana consultar la documentació oficial per validar noves integracions disponibles o canvis de comportament:
+OneLake shortcuts – Microsoft Learn
+https://learn.microsoft.com/en-us/fabric/onelake/onelake-shortcuts [learn.microsoft.com]
+
 ---
+
 
 ## Opció 1: Integració mitjançant la *Landing de l’Organisme (No AOC)*
 

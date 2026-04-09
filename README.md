@@ -9,15 +9,16 @@ Aquest repositori recopila diversos **exemples, guies i instructius** per trebal
 ```
 plataforma_dades/
  ├── microsoft-fabric/
-      └── integracio_per_consultar_dades
+      ├── integracio_per_consultar_dades
           └── exemples/
-              └── databricks/
+              ├── databricks/
               ├── graphql/
               ├── jdbc/
               ├── odbc/
               ├── powerbI/
               └── sqlserver/
- └── zona d'aterratge
+      └── integracio_per_pujar_dades/
+          └── zona_landing
 ```
 
 
