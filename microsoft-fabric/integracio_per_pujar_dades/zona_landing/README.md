@@ -48,7 +48,9 @@ Aquesta varietat permet adaptar-se tant a arquitectures cloud natives com a esce
 
 ### Creació d’un shortcut a Microsoft Fabric per llegir dades des d’un compte de Storage Landing
 Per accedir a les dades emmagatzemades en un compte de Storage des de Microsoft Fabric sense necessitat de duplicar-les, es pot crear un shortcut en un Lakehouse de l’espai de treball de Fabric.
+
 El procés consisteix a accedir al Lakehouse de l’espai de treball corresponent, seleccionar l’opció Create shortcut i escollir com a origen **Azure Data Lake Storage Gen2**. A continuació, es configura la connexió indicant el compte d’emmagatzematge, el contenidor i la ruta on resideixen les dades. L’autenticació es realitza mitjançant Azure AD, utilitzant una identitat gestionada o un servei principal proporcionats.
+
 Un cop creat, el shortcut actua com una referència lògica a les dades d’ADLS Gen2, permetent-ne la lectura directa des de Fabric (Spark, SQL o eines d’explotació) com si formessin part del Lakehouse, mantenint el govern de la dada i evitant la replicació innecessària de la informació.
 
 ### Documentació oficial de Microsoft
