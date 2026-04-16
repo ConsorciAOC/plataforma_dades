@@ -103,7 +103,7 @@ Per crear un shortcut de tipus taula, cal seguir els passos següents:
 - Accedeix al teu Lakehouse Bronze a Microsoft Fabric.
 - A la secció Tables, fes clic amb el botó dret i selecciona New table shortcut.
 - Tria l’origen de dades del shortcut (per crear shortcuts al compte d’storage Landing, selecciona Azure Data Lake Gen2).
-- Selecciona la carpeta que conté els fitxers CSV, Parquet o JSON. És necessari que els fitxers d’una mateixa interfície estiguin desats dins d’un mateix directori, i caldrà crear un shortcut que apunti a cadascun d’aquests directoris arrel.
+- Selecciona la carpeta que conté els fitxers CSV, Parquet o JSON. És necessari que els fitxers d’una mateixa interfície estiguin desats dins d’un mateix directori, i caldrà crear un shortcut que apunti a cadascun d’aquests directoris arrel. Recomanem que el nom de la carpeta coincideixi amb el nom de la taula final. Tanmateix, aquest nom es pot modificar en l’últim pas del procés de creació de la taula.
 
 
 <img src=imatges/shortcut_screenshot1.png width="400" height="250">
@@ -111,6 +111,7 @@ Per crear un shortcut de tipus taula, cal seguir els passos següents:
 <img src=imatges/shortcut_screenshot3.png width="400" height="250">
 <img src=imatges/shortcut_screenshot4.png width="400" height="250">
 <img src=imatges/shortcut_screenshot5.png width="400" height="250">
+<img src=imatges/shortcut_screenshot6.png width="400" height="250">
 
 
 Un cop realitzats aquests passos, es crearà la taula DELTA amb les dades dels fitxers. El shortcut actua com una referència lògica a les dades d’ADLS Gen2, permetent-ne la lectura directa des de Fabric (Spark, SQL o eines d’explotació) com si formessin part del Lakehouse. La taula s’actualitzarà automàticament en afegir o modificar fitxers al directori al qual apunta el shortcut.
