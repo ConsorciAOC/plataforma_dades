@@ -98,16 +98,23 @@ Aquests components formen part d’una Landing comuna i governada, preparada per
 
 
 ### Creació d’un shortcut a Microsoft Fabric per llegir dades des d’un compte de Storage Landing
-Per accedir a les dades emmagatzemades en un compte de Storage des de Microsoft Fabric sense necessitat de duplicar-les, es pot crear un shortcut en un Lakehouse de l’espai de treball de Fabric.
+Les Shortcut transformations permeten convertir fitxers estructurats (CSV, Parquet o JSON) directament en taules Delta consultables, sense necessitat de construir ni mantenir pipelines ETL. Aquestes taules es poden utilitzar des de SQL, Spark o Power BI, i es mantenen sempre sincronitzades amb les dades d’origen.
+Per crear un shortcut de tipus taula, cal seguir els passos següents:
+- Accedeix al teu Lakehouse Bronze a Microsoft Fabric.
+- A la secció Tables, fes clic amb el botó dret i selecciona New table shortcut.
+- Tria l’origen de dades del shortcut (per crear shortcuts al compte d’storage Landing, selecciona Azure Data Lake Gen2).
+- Selecciona la carpeta que conté els fitxers CSV, Parquet o JSON. És necessari que els fitxers d’una mateixa interfície estiguin desats dins d’un mateix directori, i caldrà crear un shortcut que apunti a cadascun d’aquests directoris arrel.
 
-El procés consisteix a accedir al Lakehouse de l’espai de treball corresponent, seleccionar l’opció Create shortcut i escollir com a origen **Azure Data Lake Storage Gen2**. A continuació, es configura la connexió indicant el compte d’emmagatzematge, el contenidor i la ruta on resideixen les dades. L’autenticació es realitza mitjançant Azure AD, utilitzant una identitat gestionada o un servei principal proporcionats.
 
-Un cop creat, el shortcut actua com una referència lògica a les dades d’ADLS Gen2, permetent-ne la lectura directa des de Fabric (Spark, SQL o eines d’explotació) com si formessin part del Lakehouse, mantenint el govern de la dada i evitant la replicació innecessària de la informació.
-
-<img src=imatges/shortcut_screenshot1.png width="250" height="250">
+<img src=imatges/shortcut_screenshot1.png width="400" height="250">
 <img src=imatges/shortcut_screenshot2.png width="400" height="250">
 <img src=imatges/shortcut_screenshot3.png width="400" height="250">
 <img src=imatges/shortcut_screenshot4.png width="400" height="250">
+<img src=imatges/shortcut_screenshot5.png width="400" height="250">
+
+
+Un cop realitzats aquests passos, es crearà la taula DELTA amb les dades dels fitxers. El shortcut actua com una referència lògica a les dades d’ADLS Gen2, permetent-ne la lectura directa des de Fabric (Spark, SQL o eines d’explotació) com si formessin part del Lakehouse. La taula s’actualitzarà automàticament en afegir o modificar fitxers al directori al qual apunta el shortcut.
+
 
 ---
 
