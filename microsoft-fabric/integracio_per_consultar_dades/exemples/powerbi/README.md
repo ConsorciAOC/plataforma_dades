@@ -1,6 +1,7 @@
 # Connectar-se al Data Lake des de Power BI Desktop a un SQL Endpoint
 
-Aquest instructiu explica com connectar Power BI Desktop a un SQL Analytics Endpoint de Microsoft Fabric.
+Aquest instructiu descriu com connectar Power BI Desktop a un SQL Analytics Endpoint de Microsoft Fabric.
+El procediment és aplicable tant per connectar Power BI a taules Delta del Lakehouse com a shortcuts de tipus taula ("Table").
 
 ## 1. Requisits previs
 - Power BI Desktop instal·lat.
@@ -11,11 +12,11 @@ Aquest instructiu explica com connectar Power BI Desktop a un SQL Analytics Endp
 2. Obre el Lakehouse al qual vols connectar-te, ves a Configuració → Punt de Connexió d'Anàlisi SQL (SQL endpoint en anglès).
 3. Copia la URL i el nom del Lakehouse.
 
-![alt text](image.png)
+![alt text](imatges/image.png)
 
-![alt text](image-1.png)
+![alt text](imatges/image-1.png)
 
-![alt text](image-3.png)
+![alt text](imatges/image-3.png)
 
 ## 3. Connectar-se des de Power BI Desktop
 1. Obre Power BI Desktop.
@@ -24,12 +25,12 @@ Aquest instructiu explica com connectar Power BI Desktop a un SQL Analytics Endp
 4. Database: `<LakehouseName>`. Nom del Lakehouse copiat anteriorment.
 5. Tria Import o DirectQuery.
 
-![alt text](image-4.png)
+![alt text](imatges/image-4.png)
 
 ## 4. Autenticació
 Tria Microsoft Account i inicia sessió amb el compte corresponent.
 
-![alt text](image-5.png)
+![alt text](imatges/image-5.png)
 
 ## 5. Seleccionar taules
 Selecciona les taules necessàries.
