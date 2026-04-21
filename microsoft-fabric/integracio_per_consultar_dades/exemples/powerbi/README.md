@@ -25,6 +25,10 @@ El procediment és aplicable tant per connectar Power BI a taules Delta del Lake
 4. Database: `<LakehouseName>`. Nom del Lakehouse copiat anteriorment.
 5. Tria Import o DirectQuery.
 
+Recomanem seleccionar el mode **Import**, ja que permet que les dades s’emmagatzemin directament dins del model semàntic i evita la necessitat de fer crides constants al Lakehouse, fet que millora el rendiment general.
+En cas que es requereixin dades en temps real, es podria considerar l’ús de DirectQuery; no obstant això, és important tenir en compte que aquest mode implica consultes contínues a l’origen de dades, cosa que pot generar una major càrrega i una possible saturació del servei. Per aquest motiu, el seu ús no sol ser l’opció recomanada en la majoria d’escenaris.
+
+
 ![alt text](imatges/image-4.png)
 
 ## 4. Autenticació

@@ -116,6 +116,7 @@ Per crear un shortcut de tipus taula, cal seguir els passos següents:
 
 Un cop realitzats aquests passos, es crearà la taula DELTA amb les dades dels fitxers. El shortcut actua com una referència lògica a les dades d’ADLS Gen2, permetent-ne la lectura directa des de Fabric (Spark, SQL o eines d’explotació) com si formessin part del Lakehouse. La taula s’actualitzarà automàticament en afegir o modificar fitxers al directori al qual apunta el shortcut.
 
+Ara que ja es disposa de les dades, aquestes podrien ser accedides, per exemple, des de Power BI. Referencia: https://github.com/ConsorciAOC/plataforma_dades/blob/main/microsoft-fabric/integracio_per_consultar_dades/exemples/powerbi/README.md
 
 ---
 
