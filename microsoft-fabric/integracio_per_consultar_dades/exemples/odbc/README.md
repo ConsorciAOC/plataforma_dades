@@ -45,12 +45,19 @@ https://learn.microsoft.com/es-es/sql/connect/odbc/download-odbc-driver-for-sql-
 
 ---
 ## 📦 Prova de connexió
-![alt text](image.png)
+![alt text](imatges/imatge.png)
+![alt text](imatges/imatge-1.png)
 
+Seleccionar ODBC 18 for SQL Server:
 
-![alt text](image-1.png)
+![alt text](imatges/imatge-2.png)
 
-![alt text](image-2.png)
+Aquí hem d’escollir Autenticació amb Service Principal, i introduir el ServicePrincipalId i el secret:
+
+![alt text](imatges/imatge-3.png)
+
+![alt text](imatges/imatge-4.png)
+![alt text](imatges/imatge-5.png)
 
 ---
 ## 📂 Exemple de valors de configuració
