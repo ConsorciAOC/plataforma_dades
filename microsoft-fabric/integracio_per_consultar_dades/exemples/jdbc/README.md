@@ -1,85 +1,78 @@
-# 📘 Connectar-se a Microsoft Fabric Lakehouse SQL Endpoint mitjançant JDBC
+# 📘 Connexió a Microsoft Fabric Lakehouse SQL Endpoint mitjançant JDBC
 
-Aquest article explica com connectar-se al **SQL Endpoint d’un Lakehouse de Microsoft Fabric** utilitzant **JDBC des de Python**. 
-Tot i això, cal recordar que JDBC en Python depèn de *jaydebeapi* i *JPype1*, que poden no estar disponibles en alguns entorns. Aquest document replica l'exemple original i detalla els passos necessaris.
+Aquest document explica com connectar-se al **SQL Endpoint d’un Lakehouse a Microsoft Fabric** utilitzant **JDBC**.
 
 ---
+
 ## 📂 Contingut
-- Requisits
-- Instal·lació
-- Obtenció del token d’accés
-- Connexió JDBC
-- Execució de consultes
-- Exemple de valors
+- Requisits  
+- Cadena de connexió JDBC  
+- Exemple d’ús  
+- Exemple de valors  
 
 ---
+
 ## 🔧 Requisits
-Abans de començar, necessites:
-- Accés a Microsoft Fabric
-- Python 3.9 o superior
-- Driver JDBC de SQL Server (`mssql-jdbc-<versio>.jar`)
-- Llibreries Python:
-  - `jaydebeapi`
-  - `JPype1`
-  - `azure-identity`
+
+Abans de començar, assegura’t de tenir:
+
+- Accés a Microsoft Fabric  
+- Un Lakehouse amb el SQL Endpoint habilitat  
+- Driver JDBC de SQL Server (`mssql-jdbc-<versió>.jar`)  
+- Credencials d’un Service Principal:
+  - Client ID  
+  - Client Secret  
+  - Tenant ID (segons l’entorn)
 
 ---
-## 📦 Instal·lació
-Instal·la les dependències necessàries:
-```bash
-pip install jaydebeapi JPype1 azure-identity
-```
-> ⚠️ *Nota*: En alguns entorns pot fallar la instal·lació de JPype1.
 
----
-## 🔑 Obtenció del token d’accés
-```python
-from azure.identity import InteractiveBrowserCredential
-import struct
+## 🔗 Cadena de connexió JDBC
 
-SCOPE = "https://database.windows.net/.default"
-TENANT_ID = "<TENANT_ID>"
+La URL de connexió JDBC per al SQL Endpoint de Microsoft Fabric és la següent:
 
-cred = InteractiveBrowserCredential(tenant_id=TENANT_ID)
-token = cred.get_token(SCOPE)
-
-# Convertim el token al format requerit per SQL
-token_bytes = token.token.encode("utf-16-le")
-packed_token = struct.pack(f"<I{len(token_bytes)}s", len(token_bytes), token_bytes)
+```text
+jdbc:sqlserver://{SERVER_NAME}:1433;
+databaseName={DATABASE_NAME};
+authentication=ActiveDirectoryServicePrincipal;
+user={SERVICE_PRINCIPAL_CLIENT_ID};
+password={SERVICE_PRINCIPAL_CLIENT_SECRET};
+encrypt=true;
+trustServerCertificate=false;
 ```
 
----
-## 🧩 Connexió JDBC
-```python
-import jaydebeapi
+### 🔍 Paràmetres
 
-SERVER = "<SQL_ENDPOINT_URL>"  # Exemple: xxxx.datawarehouse.fabric.microsoft.com
-DATABASE = "<LAKEHOUSE_NAME>"
-DRIVER_CLASS = "com.microsoft.sqlserver.jdbc.SQLServerDriver"
-JDBC_URL = f"jdbc:sqlserver://{SERVER}:1433;database={DATABASE};encrypt=true;trustServerCertificate=false;"
-JAR_FILE = "mssql-jdbc-12.6.1.jre11.jar"
-
-# Propietats JDBC
-properties = {
-    "accessToken": token.token
-}
-
-try:
-    conn = jaydebeapi.connect(DRIVER_CLASS, JDBC_URL, properties, JAR_FILE)
-    curs = conn.cursor()
-    curs.execute("SELECT TOP 10 * FROM <schema>.<table>;")
-    rows = curs.fetchall()
-    for r in rows:
-        print(r)
-    curs.close()
-    conn.close()
-except Exception as e:
-    print("Connection failed:", e)
-```
+- `SERVER_NAME`: URL del SQL Endpoint de Fabric  
+- `DATABASE_NAME`: nom del Lakehouse  
+- `SERVICE_PRINCIPAL_CLIENT_ID`: Client ID del Service Principal  
+- `SERVICE_PRINCIPAL_CLIENT_SECRET`: Client Secret del Service Principal  
+- `authentication=ActiveDirectoryServicePrincipal`: mètode d’autenticació  
+- `encrypt=true`: habilita el xifrat  
+- `trustServerCertificate=false`: valida el certificat del servidor  
 
 ---
+
+## 🧩 Exemple d’ús
+
+Exemple genèric d’ús de la cadena de connexió con JDBC:
+![alt text](imatges/imatge-1.png)
+
+---
+
 ## 📂 Exemple de valors
-- **TENANT_ID:** 37a8a0b9-1874-4e5d-b1f5-11040c1c07fc
-- **SQL_ENDPOINT_URL:** xgqkqn3udbou5mpvcecayhah7q-hr43b7ttdlwutldvr36wzajgva.datawarehouse.fabric.microsoft.com
-- **LAKEHOUSE_NAME:** lakehouse_gold
 
+- **SERVER_NAME**:  
+  `xgqkqn3udbou5mpvcecayhah7q-hr43b7ttdlwutldvr36wzajgva.datawarehouse.fabric.microsoft.com`
+
+- **DATABASE_NAME**:  
+  `lakehouse_gold`
+
+- **SERVICE_PRINCIPAL_CLIENT_ID**:  
+  `xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx`
+
+- **SERVICE_PRINCIPAL_CLIENT_SECRET**:  
+  `xxxxxxxxxxxxxxxxxxxxxxxx`
+
+---
+
+✅ Amb aquesta configuració podràs connectar-te directament al SQL Endpoint de Microsoft Fabric utilitzant JDBC amb autenticació basada en Service Principal.
