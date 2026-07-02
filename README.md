@@ -11,6 +11,7 @@ plataforma_dades/
  ├── microsoft-fabric/
       ├── integracio_per_consultar_dades
           └── exemples/
+              ├── data_agent_mcp/
               ├── databricks/
               ├── graphql/
               ├── jdbc/
