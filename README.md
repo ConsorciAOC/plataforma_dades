@@ -9,6 +9,9 @@ Aquest repositori recopila diversos **exemples, guies i instructius** per trebal
 ```
 plataforma_dades/
  ├── microsoft-fabric/
+      ├── introducció
+            ├── primers_passos
+            └── espais_de_treball
       ├── integracio_per_consultar_dades
           └── exemples/
               ├── data_agent_mcp/
